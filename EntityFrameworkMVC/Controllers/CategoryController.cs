@@ -16,6 +16,31 @@ namespace EntityFrameworkMVC.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public IActionResult DoEdit(Category cat)
+        {
+            var c = db.Categories.SingleOrDefault(ca => ca.Id == cat.Id);
+            c.CategoryName = cat.CategoryName;
+            db.SaveChanges();
+            return RedirectToAction("ViewAll");
+        }
+        public IActionResult Edit(int id)
+        {
+            var c = db.Categories.SingleOrDefault(ca => ca.Id == id);
+            return View(c);
+        }
+
+        public IActionResult Details(int id)
+        {
+            var c = db.Categories.SingleOrDefault(ca => ca.Id == id);
+            return View(c);
+        }
+        public IActionResult Delete(int id)
+        {
+            var c = db.Categories.SingleOrDefault(ca => ca.Id == id);
+            db.Categories.Remove(c);
+            db.SaveChanges();
+            return RedirectToAction("ViewAll");
+        }
         public IActionResult ViewAll()
         {
             return View(db.Categories.ToList());
