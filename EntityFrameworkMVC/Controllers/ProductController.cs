@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using EntityFrameworkMVC.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkMVC.Controllers
 {
@@ -14,13 +15,20 @@ namespace EntityFrameworkMVC.Controllers
         PhoneShopContext db = new PhoneShopContext();
         public IActionResult Index()
         {
-            return View();
+            //db.Categories.ToList();
+            return View(db.Products.Take(10).Include(p=>p.CategoryNavigation).ToList());
+        }
+        public IActionResult Search(string txtSearch)
+        {
+            var result = db.Products.Where(p => p.ProductName.Contains(txtSearch));
+            return View("Index", result);
         }
         public IActionResult Create()
         {
             ViewBag.category = db.Categories;
             return View();
         }
+        
         public async Task<IActionResult> DoCreateAsync(IFormFile postedFile, Product product)
         {            
             using (var dataStream = new MemoryStream())

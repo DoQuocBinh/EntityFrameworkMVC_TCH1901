@@ -16,3 +16,5 @@ namespace EntityFrameworkMVC.Models
         public virtual Category CategoryNavigation { get; set; }
     }
 }
+
+
