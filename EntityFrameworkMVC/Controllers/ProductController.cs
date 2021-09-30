@@ -29,7 +29,7 @@ namespace EntityFrameworkMVC.Controllers
             return View();
         }
         
-        public async Task<IActionResult> DoCreateAsync(IFormFile postedFile, Product product)
+        public async Task<IActionResult> DoCreate(IFormFile postedFile, Product product)
         {            
             using (var dataStream = new MemoryStream())
             {
@@ -38,7 +38,7 @@ namespace EntityFrameworkMVC.Controllers
             }
             db.Products.Add(product);
             db.SaveChanges();
-            return RedirectToAction("Create");
+            return RedirectToAction("Index");
         }
 
     }
